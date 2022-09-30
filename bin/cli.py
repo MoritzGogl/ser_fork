@@ -1,14 +1,9 @@
 from pathlib import Path
-#import torch
-#from torch import optim
-#import torch.nn as nn
-#import torch.nn.functional as F
-#from torch.utils.data import DataLoader
-#from torchvision import datasets, transforms
 
 import typer
-
-from train import run_training
+import torch
+from ser.train import run_training
+from ser.model import Net
 
 main = typer.Typer()
 
@@ -34,7 +29,13 @@ def train(
         ..., "-r", "--learning_rate", help="Learning rate"
     ),
     ):
-    run_training(name, epochs, batch_size, learning_rate, DATA_DIR)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    model = Net().to(device)
+
+    run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, device)
+      # load model
+    
 
 
 
