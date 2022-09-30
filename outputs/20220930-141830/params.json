@@ -1,0 +1,1 @@
+{"name": "experiment1", "epochs": 1, "batch size": 1000, "learning rate": 0.01, "best epoch": 0, "best accuracy": 0.9764}

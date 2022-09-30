@@ -3,13 +3,23 @@ import typer
 import torch
 from ser.train import run_training
 from ser.model import Net
-import os
-
+import git
+from git import Repo
 main = typer.Typer()
 
 PROJECT_ROOT = Path(__file__).parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 
+
+repo = Repo(PROJECT_ROOT)
+print(repo.index.diff(None))
+
+assert repo.index.diff(None) == []
+#repo = git.Repo(search_parent_directories=True)
+#sha = repo.head.object.hexsha
+#print(sha)
+
+print("===================================")
 
 @main.command()
 def train(    

@@ -11,8 +11,12 @@ from dataclasses import dataclass
 
 @dataclass
 class DataClass_Hyperparams:
-    best_acc: float
-
+    best_val_acc: float
+    name: str
+    epochs: int
+    best_epoch: int
+    learning_rate: float
+    batch_size: int 
 
 
 def run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, device, PROJECT_ROOT):
@@ -25,7 +29,6 @@ def run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, devic
 
     training_dataloader = loading_data(batch_size, DATA_DIR, ts)[0]
     validation_dataloader = loading_data(batch_size, DATA_DIR, ts)[1]
-    print(PROJECT_ROOT)
 
     timestr = time.strftime("%Y%m%d-%H%M%S")
     path=str(PROJECT_ROOT) + "/outputs/"+timestr
@@ -73,7 +76,7 @@ def run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, devic
 
                     torch.save(model.state_dict(), path+'/model_weights.pth')
 
-                    dictionary ={ 
+                    dictionary = { 
                     "name": name, 
                     "epochs": epochs, 
                     "batch size": batch_size,
@@ -85,9 +88,10 @@ def run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, devic
 
                     with open(path + '/params.json', "w") as outfile:
                          json.dump(dictionary, outfile)
+  
 
-                    Params = DataClass_Hyperparams(best_val_acc)
-                
+                    Params = DataClass_Hyperparams(best_val_acc, name, epochs, best_epoch, learning_rate, batch_size)
+                    print(Params.best_val_acc, Params.name, Params.epochs, Params.best_epoch, Params.learning_rate, Params.batch_size )
 
     
 
