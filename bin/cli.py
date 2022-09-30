@@ -3,6 +3,7 @@ import typer
 import torch
 from ser.train import run_training
 from ser.model import Net
+import os
 
 main = typer.Typer()
 
@@ -32,7 +33,7 @@ def train(
 
     model = Net().to(device)
 
-    run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, device)
+    run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, device, PROJECT_ROOT)
     
 
 
