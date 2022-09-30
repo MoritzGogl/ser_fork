@@ -17,9 +17,10 @@ class DataClass_Hyperparams:
     best_epoch: int
     learning_rate: float
     batch_size: int 
+    sha: str 
 
 
-def run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, device, PROJECT_ROOT):
+def run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, device, PROJECT_ROOT, sha):
 
     print(f"Running experiment {name}")
 
@@ -82,7 +83,8 @@ def run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, devic
                     "batch size": batch_size,
                     "learning rate": learning_rate,
                     "best epoch": best_epoch,
-                    "best accuracy": best_val_acc
+                    "best accuracy": best_val_acc,
+                    "hash code": sha
                     } 
      
 
@@ -90,8 +92,8 @@ def run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, devic
                          json.dump(dictionary, outfile)
   
 
-                    Params = DataClass_Hyperparams(best_val_acc, name, epochs, best_epoch, learning_rate, batch_size)
-                    print(Params.best_val_acc, Params.name, Params.epochs, Params.best_epoch, Params.learning_rate, Params.batch_size )
+                    Params = DataClass_Hyperparams(best_val_acc, name, epochs, best_epoch, learning_rate, batch_size, sha)
+                    print(Params.best_val_acc, Params.name, Params.epochs, Params.best_epoch, Params.learning_rate, Params.batch_size, Params.sha)
 
     
 

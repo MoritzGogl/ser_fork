@@ -12,12 +12,11 @@ DATA_DIR = PROJECT_ROOT / "data"
 
 
 repo = Repo(PROJECT_ROOT)
-print(repo.index.diff(None))
 
 assert repo.index.diff(None) == []
-#repo = git.Repo(search_parent_directories=True)
-#sha = repo.head.object.hexsha
-#print(sha)
+repo = git.Repo(search_parent_directories=True)
+sha = repo.head.object.hexsha
+
 
 print("===================================")
 
@@ -43,7 +42,7 @@ def train(
 
     model = Net().to(device)
 
-    run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, device, PROJECT_ROOT)
+    run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, device, PROJECT_ROOT, sha)
     
 
 
