@@ -13,7 +13,7 @@ DATA_DIR = PROJECT_ROOT / "data"
 
 repo = Repo(PROJECT_ROOT)
 
-assert repo.index.diff(None) == []
+#assert repo.index.diff(None) == []
 repo = git.Repo(search_parent_directories=True)
 sha = repo.head.object.hexsha
 
