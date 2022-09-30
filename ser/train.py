@@ -1,42 +1,19 @@
 import torch
 from torch import optim
 import torch.nn.functional as F
-from torch.utils.data import DataLoader
-from torchvision import datasets, transforms
-from ser.model import Net
+from ser.data import loading_data
+from ser.transforms import loading_transforms
 
 def run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, device):
 
     print(f"Running experiment {name}")
 
-    
-    #batch_size = 1000
-    #learning_rate = 0.01
-
-    # save the parameters!
-
-    # setup params
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-    # torch transforms
-    ts = transforms.Compose(
-        [transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]
-    )
+    ts=loading_transforms()
 
-    # dataloaders
-    training_dataloader = DataLoader(
-        datasets.MNIST(root="../data", download=True, train=True, transform=ts),
-        batch_size=batch_size,
-        shuffle=True,
-        num_workers=1,
-    )
-
-    validation_dataloader = DataLoader(
-        datasets.MNIST(root=DATA_DIR, download=True, train=False, transform=ts),
-        batch_size=batch_size,
-        shuffle=False,
-        num_workers=1,
-    )
+    training_dataloader = loading_data(batch_size, DATA_DIR, ts)[0]
+    validation_dataloader = loading_data(batch_size, DATA_DIR, ts)[1]
 
     # train
     for epoch in range(epochs):

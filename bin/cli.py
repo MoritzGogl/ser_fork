@@ -1,5 +1,4 @@
 from pathlib import Path
-
 import typer
 import torch
 from ser.train import run_training
@@ -34,9 +33,7 @@ def train(
     model = Net().to(device)
 
     run_training(name, epochs, batch_size, learning_rate, DATA_DIR, model, device)
-      # load model
     
-
 
 
 @main.command()
